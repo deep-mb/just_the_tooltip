@@ -331,6 +331,7 @@ abstract class JustTheTooltipState<T> extends State<JustTheInterface>
   // static const Duration _defaultAnimateDuration = Duration(milliseconds: 1000);
   late JustTheController _controller;
   late bool _hasBindingListeners = false;
+  bool isDisposed = false;
   final _layerLink = LayerLink();
 
   @override
@@ -464,19 +465,23 @@ abstract class JustTheTooltipState<T> extends State<JustTheInterface>
       return future;
     }
 
-    if (_pressActivated) {
-      _hideTimer ??= Timer(showDuration, () async {
-        await _animationController.reverse();
-        completer.complete();
-      });
-    } else {
-      _hideTimer ??= Timer(
-        hoverShowDuration,
-        () async {
+    if (!isDisposed) {
+      if (_pressActivated) {
+        _hideTimer ??= Timer(showDuration, () async {
           await _animationController.reverse();
           completer.complete();
-        },
-      );
+        });
+      } else {
+        _hideTimer ??= Timer(
+          hoverShowDuration,
+          () async {
+            await _animationController.reverse();
+            completer.complete();
+          },
+        );
+      }
+    } else {
+      completer.complete();
     }
 
     _pressActivated = false;
@@ -564,9 +569,12 @@ abstract class JustTheTooltipState<T> extends State<JustTheInterface>
 
   @override
   void dispose() {
+    isDisposed = true;
     if (_hasBindingListeners) {
       _removeBindingListeners();
     }
+
+    print('JustTheTooltip :: dispose called');
 
     _animationController.dispose();
 
