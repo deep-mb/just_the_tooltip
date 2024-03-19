@@ -574,8 +574,6 @@ abstract class JustTheTooltipState<T> extends State<JustTheInterface>
       _removeBindingListeners();
     }
 
-    print('JustTheTooltip :: dispose called');
-
     _animationController.dispose();
 
     /// If we've made our own controller because the user's is null, we need to
