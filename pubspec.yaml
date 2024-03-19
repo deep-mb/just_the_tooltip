@@ -5,15 +5,15 @@ version: 0.0.12
 homepage: https://github.com/Nolence/just_the_tooltip
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=3.2.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
-  golden_toolkit: ^0.13.0
+  flutter_lints: ^3.0.1
+  golden_toolkit: ^0.15.0
   flutter_test:
     sdk: flutter
 
